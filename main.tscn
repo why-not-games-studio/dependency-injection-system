@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://bx4d63ujj0n3x"]
+
+[ext_resource type="Script" path="res://dependency_injection_system/dependency_provider.gd" id="1_eos1i"]
+[ext_resource type="Script" path="res://game_management_system/game_manager.gd" id="2_3xc7c"]
+[ext_resource type="Script" path="res://logging_system/logger.gd" id="2_615su"]
+[ext_resource type="Script" path="res://game_states/init.gd" id="3_2nq7j"]
+[ext_resource type="Script" path="res://pause_system/pause_manager.gd" id="3_pcwjt"]
+[ext_resource type="PackedScene" uid="uid://bh8otjc0kk4h" path="res://sub.tscn" id="6_3fl8t"]
+
+[node name="Main" type="Node"]
+
+[node name="CoreSystems" type="Node" parent="."]
+
+[node name="DependencyProvider" type="Node" parent="CoreSystems" node_paths=PackedStringArray("_dependencies")]
+script = ExtResource("1_eos1i")
+_dependencies = [NodePath("../GameManager"), NodePath("../PauseManager")]
+
+[node name="Logger" type="Node" parent="CoreSystems"]
+script = ExtResource("2_615su")
+
+[node name="GameManager" type="Node" parent="CoreSystems" node_paths=PackedStringArray("_initial_game_state")]
+script = ExtResource("2_3xc7c")
+_initial_game_state = NodePath("Init")
+
+[node name="Init" type="Node" parent="CoreSystems/GameManager"]
+script = ExtResource("3_2nq7j")
+
+[node name="PauseManager" type="Node" parent="CoreSystems"]
+script = ExtResource("3_pcwjt")
+
+[node name="Sub" parent="." instance=ExtResource("6_3fl8t")]

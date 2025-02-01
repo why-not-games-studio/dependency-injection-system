@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bh8otjc0kk4h"]
+
+[ext_resource type="Script" path="res://dependency_injection_system/dependency_injector.gd" id="1_foil4"]
+[ext_resource type="Script" path="res://dependency_injection_system/test_receiver.gd" id="2_k0hl5"]
+
+[node name="Sub" type="Node"]
+
+[node name="DependencyInjector" type="Node" parent="."]
+script = ExtResource("1_foil4")
+_dependency_names = Array[StringName]([&"GameManagerBase", &"PauseManagerBase"])
+
+[node name="TestReceiver" type="Node" parent="."]
+script = ExtResource("2_k0hl5")
