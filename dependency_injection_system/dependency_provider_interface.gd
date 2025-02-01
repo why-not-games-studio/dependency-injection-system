@@ -1,6 +1,6 @@
 ## Serves as an abstraction between any DependencyProvider and its dependents 
 ## and must be autoloaded as global if Dependency Injection functionality is desired.
-class_name DependencyProviderInterface
+## Global - IDependencyProvider
 extends Node
 
 
