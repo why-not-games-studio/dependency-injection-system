@@ -28,7 +28,7 @@
 
 **6.** Now to test it, in that same scene, create any node, attach a script to it, and ensure that the script has a function named "_inject" for it to work. If you don't like the "_inject" function name, just change it in the DependencyInjector script.
 
-   ![Full Test Receiver](https://github.com/user-attachments/assets/8529fd21-3e38-416f-bcdd-063900d4d980)
+   ![Full Test Receiver](https://github.com/user-attachments/assets/deee45fc-b4c7-4b42-a0f8-094015f08c3c)
 
 ## Considerations
 **If you don't utilize an additive form of managed scene handling, then you will have to refactor the DependencyProvider by removing the "class_name" and adding the "dependency_provision_completed" signal in the script, making it a global autoload and making the DependencyInjector work around that instead.**
