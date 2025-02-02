@@ -1,4 +1,5 @@
-## Default implementation of a DependencyProvider to provide dependencies for all dependency injectors.
+## Default implementation of a DependencyProvider which 
+## provides dependencies for all dependency injectors.
 ## Relies on DependencyProviderInterface.
 class_name DependencyProvider
 extends Node
@@ -20,16 +21,22 @@ func _exit_tree() -> void:
 
 
 func _connect_signals() -> void:
-	IDependencyProvider.dependency_registration_requested.connect(_register_dependency)
-	IDependencyProvider.dependency_deregistration_requested.connect(_deregister_dependency)
+	IDependencyProvider.dependency_registration_requested \
+		.connect(_register_dependency)
+	IDependencyProvider.dependency_deregistration_requested \
+		.connect(_deregister_dependency)
 	
-	IDependencyProvider.dependency_provision_requested.connect(_resolve_dependency_provision)
+	IDependencyProvider.dependency_provision_requested \
+		.connect(_resolve_dependency_provision)
 
 func _disconnect_signals() -> void:
-	IDependencyProvider.dependency_registration_requested.disconnect(_register_dependency)
-	IDependencyProvider.dependency_deregistration_requested.disconnect(_deregister_dependency)
+	IDependencyProvider.dependency_registration_requested \
+		.disconnect(_register_dependency)
+	IDependencyProvider.dependency_deregistration_requested \
+		.disconnect(_deregister_dependency)
 	
-	IDependencyProvider.dependency_provision_requested.disconnect(_resolve_dependency_provision)
+	IDependencyProvider.dependency_provision_requested \
+		.disconnect(_resolve_dependency_provision)
 
 
 func _initialize_dependencies() -> void:
@@ -46,7 +53,8 @@ func _register_dependency(dependency: Node) -> void:
 		# Log an Error
 		return
 		
-	var dependency_name: StringName = DependencyInjectionHelper.get_resolved_dependency_name(dependency.name)
+	var dependency_name: StringName = DependencyInjectionHelper \
+		.get_resolved_dependency_name(dependency.name)
 	_dependencies_dict[dependency_name] = dependency
 
 func _deregister_dependency(dependency_name: StringName) -> void:
@@ -54,7 +62,8 @@ func _deregister_dependency(dependency_name: StringName) -> void:
 		# Log an Error
 		return
 	
-	dependency_name = DependencyInjectionHelper.get_resolved_dependency_name(dependency_name)
+	dependency_name = DependencyInjectionHelper \
+		.get_resolved_dependency_name(dependency_name)
 	if _dependencies_dict.has(dependency_name):
 		_dependencies_dict.erase(dependency_name)
 

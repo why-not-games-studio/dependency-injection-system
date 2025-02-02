@@ -1,4 +1,5 @@
-## For use in enclosed scenes to inject dependencies, which are provided by a dependency provider,
+## For use in enclosed scenes to inject dependencies,
+## which are provided by a dependency provider,
 ## into its siblings that request it via Method Injection.
 class_name DependencyInjector
 extends Node
@@ -12,7 +13,8 @@ const INJECT_METHOD_NAME: StringName = "_inject"
 
 func _enter_tree() -> void:
 	_initialize_dependency_names()
-	IDependencyProvider.dependency_provision_completed.connect(_on_dependency_provision_completed, CONNECT_ONE_SHOT)
+	IDependencyProvider.dependency_provision_completed \
+	.connect(_on_dependency_provision_completed, CONNECT_ONE_SHOT)
 
 func _ready() -> void:
 	IDependencyProvider.request_dependency_provision(_dependency_names)
@@ -22,7 +24,8 @@ func _ready() -> void:
 func _initialize_dependency_names() -> void:
 	for i: int in range(_dependency_names.size()):
 		var dependency_name: String = _dependency_names[i]
-		_dependency_names[i] = DependencyInjectionHelper.get_resolved_dependency_name(dependency_name)
+		_dependency_names[i] = DependencyInjectionHelper \
+			.get_resolved_dependency_name(dependency_name)
 
 
 func _on_dependency_provision_completed(dependencies: Dictionary, result: Error) -> void:
@@ -44,7 +47,8 @@ func _inject_dependencies(sibling: Node, dependencies: Dictionary) -> void:
 	if not sibling.has_method(INJECT_METHOD_NAME):
 		return
 		
-	var method_info: Dictionary = DependencyInjectionHelper.get_method_info(sibling, INJECT_METHOD_NAME)
+	var method_info: Dictionary = DependencyInjectionHelper \
+		.get_method_info(sibling, INJECT_METHOD_NAME)
 	if method_info.is_empty():
 		# Log a warning that an _inject function has no parameters.
 		return
