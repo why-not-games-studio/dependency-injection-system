@@ -86,6 +86,7 @@ func _register_injectable(node: Node) -> void:
 		
 	_injectables.append(node)
 
+
 func _register_dependency(dependency: Node) -> void:
 	if dependency == null:
 		# Log an Error
