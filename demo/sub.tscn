@@ -5,8 +5,8 @@
 
 [node name="Sub" type="Node"]
 
-[node name="TestReceiver" type="Node" parent="."]
-script = ExtResource("2_k0hl5")
-
 [node name="DependencyInjectionRequester" type="Node" parent="."]
 script = ExtResource("2_gm43t")
+
+[node name="TestReceiver" type="Node" parent="."]
+script = ExtResource("2_k0hl5")
