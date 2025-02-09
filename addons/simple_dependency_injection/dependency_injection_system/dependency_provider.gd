@@ -121,7 +121,8 @@ func _inject_dependencies() -> void:
 		var arguments: Array = []
 		
 		for parameter: Dictionary in parameters:
-			var dependency_name: StringName = parameter.class_name
+			var dependency_name: StringName = DependencyInjectionHelper \
+				.get_resolved_dependency_name(parameter.class_name)
 			var dependency_instance: Node = _dependencies_dict \
 				.get(dependency_name)
 				
