@@ -28,6 +28,7 @@
 
    ![Full Test Receiver](https://github.com/user-attachments/assets/5ccf27e1-2a62-4a82-b8b7-56c17b10ef2d)
 
-## Use Cases
+## Some Use Cases
 **1.** A situation where you do not have direct in-scene access (via @export) to the nodes you need in a script and do not wish to create a Global Autoload.
+
 **2.** The nodes you are dependent on have their own in-scene dependencies.
