@@ -89,7 +89,7 @@ func _register_injectable(node: Node) -> void:
 
 func _register_dependency(dependency: Node) -> void:
 	if dependency == null:
-		# Log an Error
+		push_warning("The 'dependency' passed cannot be null.")
 		return
 		
 	var dependency_name: StringName = DependencyInjectionHelper \
@@ -98,7 +98,7 @@ func _register_dependency(dependency: Node) -> void:
 
 func _deregister_dependency(dependency_name: StringName) -> void:
 	if dependency_name == "":
-		# Log an Error
+		push_warning("The 'dependency_name' passed cannot be an empty string.")
 		return
 	
 	dependency_name = DependencyInjectionHelper \
@@ -111,8 +111,9 @@ func _inject_dependencies() -> void:
 	for injectable: Node in _injectables:
 		var method_info: Dictionary = DependencyInjectionHelper \
 			.get_method_info(injectable, INJECT_METHOD_NAME)
-		if method_info.is_empty():
-			# Log a warning that an _inject function has no parameters.
+		if method_info.args.is_empty():
+			push_warning("The '_inject' function on [", injectable.name,
+			"] has no parameters.")
 			continue
 		
 		var callable: Callable = Callable(injectable, INJECT_METHOD_NAME)
@@ -120,7 +121,8 @@ func _inject_dependencies() -> void:
 		var arguments: Array = []
 		
 		for parameter: Dictionary in parameters:
-			var dependency_name: StringName = parameter.class_name
+			var dependency_name: StringName = DependencyInjectionHelper \
+				.get_resolved_dependency_name(parameter.class_name)
 			var dependency_instance: Node = _dependencies_dict \
 				.get(dependency_name)
 				

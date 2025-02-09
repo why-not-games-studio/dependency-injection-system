@@ -11,14 +11,17 @@ config_version=5
 [application]
 
 config/name="dependency-injection-system"
-run/main_scene="res://main.tscn"
+run/main_scene="res://addons/simple_dependency_injection/demo/scenes/demo_main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://addons/simple_dependency_injection/demo/icon.svg"
 
 [autoload]
 
-IDependencyProvider="*res://dependency_injection_system/dependency_provider_interface.gd"
-ILogger="*res://logging_system/logger_interface.gd"
+IDependencyProvider="*res://addons/simple_dependency_injection/dependency_injection_system/dependency_provider_interface.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/simple_dependency_injection/plugin.cfg")
 
 [rendering]
 
