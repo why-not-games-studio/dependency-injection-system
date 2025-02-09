@@ -1,10 +1,10 @@
 # Dependency Injection System
  A simple Dependency Injection implementation for Godot 4 made with GDScript.
 
-## Get Started (Manual)
-**1.** Go to **Project > Project Settings > Globals > Autoload**, click on the small folder icon, navigate to the 'dependency-injection-system' folder, select the file named 'dependency_provider_interface.gd' and click the "Open" button, rename the 'Node Name:' to "IDependencyProvider" then finally click on the "Add" button.
+## Get Started
+**1.** Go to **Project > Project Settings > Plugins** and ensure that the "Simple Dependency Injection" plugin is enabled.
    
-   ![Autoloads](https://github.com/user-attachments/assets/f5c9d3c8-adba-4590-8793-e5e5c82882ed)
+   ![image](https://github.com/user-attachments/assets/d32dc005-55f4-494b-aea8-d7f81284b481)
 
 **2.** Right-click on your main scene, click on the "Add Child Node" button, in the search bar, type "Dependency", select the [DependencyProvider], then click on the "Create" button.
 
