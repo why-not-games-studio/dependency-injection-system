@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://bx4d63ujj0n3x"]
+
+[ext_resource type="Script" path="res://addons/simple_dependency_injection/dependency_injection_system/dependency_provider.gd" id="1_t2fok"]
+[ext_resource type="Script" path="res://addons/simple_dependency_injection/demo/game_management_system/game_manager.gd" id="2_1pao3"]
+[ext_resource type="Script" path="res://addons/simple_dependency_injection/demo/game_states/init.gd" id="3_nkxin"]
+[ext_resource type="Script" path="res://addons/simple_dependency_injection/demo/pause_system/pause_manager.gd" id="4_8rxme"]
+[ext_resource type="Script" path="res://addons/simple_dependency_injection/demo/scripts/dependency_without_base_class.gd" id="5_2l4pj"]
+[ext_resource type="PackedScene" uid="uid://bh8otjc0kk4h" path="res://addons/simple_dependency_injection/demo/scenes/demo_sub.tscn" id="6_3c3tp"]
+
+[node name="Main" type="Node"]
+
+[node name="CoreSystems" type="Node" parent="."]
+
+[node name="DependencyProvider" type="Node" parent="CoreSystems" node_paths=PackedStringArray("_dependencies")]
+script = ExtResource("1_t2fok")
+_dependencies = [NodePath("../GameManager"), NodePath("../PauseManager"), NodePath("../DependencyWithoutBaseClass")]
+
+[node name="GameManager" type="Node" parent="CoreSystems" node_paths=PackedStringArray("_initial_game_state")]
+script = ExtResource("2_1pao3")
+_initial_game_state = NodePath("Init")
+
+[node name="Init" type="Node" parent="CoreSystems/GameManager"]
+script = ExtResource("3_nkxin")
+
+[node name="PauseManager" type="Node" parent="CoreSystems"]
+script = ExtResource("4_8rxme")
+
+[node name="DependencyWithoutBaseClass" type="Node" parent="CoreSystems"]
+script = ExtResource("5_2l4pj")
+
+[node name="Sub" parent="." instance=ExtResource("6_3c3tp")]

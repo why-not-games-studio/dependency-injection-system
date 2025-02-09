@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bh8otjc0kk4h"]
 
 [ext_resource type="Script" path="res://addons/simple_dependency_injection/dependency_injection_system/dependency_injection_requester.gd" id="2_gm43t"]
-[ext_resource type="Script" path="res://demo/test_receiver.gd" id="2_k0hl5"]
+[ext_resource type="Script" path="res://addons/simple_dependency_injection/demo/scripts/test_receiver.gd" id="2_k0hl5"]
 
 [node name="Sub" type="Node"]
 
