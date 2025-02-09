@@ -14,7 +14,8 @@ static func get_resolved_dependency_name(dependency_name: StringName) -> StringN
 	if not class_info_dict.has(dependency_name):
 		return ""
 		
-	# We get the base class name because all scripts with class_name defined have one in the global class list. 
+	# We get the base class name because all scripts with 
+	# class_name defined have one in the global class list. 
 	# We check if base class name is custom against the ClassDB because
 	# only pre-defined engine classes exist there.
 	var base_class_name: StringName = class_info_dict.get(dependency_name).base

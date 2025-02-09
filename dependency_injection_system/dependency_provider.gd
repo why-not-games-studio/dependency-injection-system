@@ -1,35 +1,74 @@
-## Default implementation of a DependencyProvider to provide dependencies for all dependency injectors.
-## Relies on DependencyProviderInterface.
+## Default implementation of a DependencyProvider which 
+## provides dependencies for all injectables.
+## Relies on Global Autoload [IDependencyProvider].
+@tool
 class_name DependencyProvider
 extends Node
 
 
+const INJECT_METHOD_NAME: StringName = "_inject"
+
 @export_category("Members")
-@export var _dependencies: Array[Node]
+@export var _dependencies: Array[Node]:
+	get:
+		return _dependencies
+	set(value):
+		_dependencies = value
+		
+		if Engine.is_editor_hint():
+			update_configuration_warnings()
 
 var _dependencies_dict: Dictionary # Dictionary[StringName, Node]
+var _injectables: Array[Node]
+
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray = []
+
+	for dependency: Node in _dependencies:
+		if dependency == null:
+			warnings.append("There cannot be an unassigned Dependency node.")
+			break
+	
+	return warnings
 
 
 func _enter_tree() -> void:
-	_connect_signals()
-	_initialize_dependencies()
+	if not Engine.is_editor_hint():
+		_connect_signals()
+		_initialize_dependencies()
+
+func _ready() -> void:
+	if not Engine.is_editor_hint():
+		_inject_dependencies()
 
 func _exit_tree() -> void:
-	_deinitialize_dependencies()
-	_disconnect_signals()
+	if not Engine.is_editor_hint():
+		_deinitialize_dependencies()
+		_disconnect_signals()
 
 
 func _connect_signals() -> void:
-	IDependencyProvider.dependency_registration_requested.connect(_register_dependency)
-	IDependencyProvider.dependency_deregistration_requested.connect(_deregister_dependency)
+	get_tree().node_added.connect(_register_injectable)
 	
-	IDependencyProvider.dependency_provision_requested.connect(_resolve_dependency_provision)
+	IDependencyProvider.dependency_registration_requested \
+		.connect(_register_dependency)
+	IDependencyProvider.dependency_deregistration_requested \
+		.connect(_deregister_dependency)
+	
+	IDependencyProvider.dependency_injection_requested \
+		.connect(_inject_dependencies)
 
 func _disconnect_signals() -> void:
-	IDependencyProvider.dependency_registration_requested.disconnect(_register_dependency)
-	IDependencyProvider.dependency_deregistration_requested.disconnect(_deregister_dependency)
+	get_tree().node_added.disconnect(_register_injectable)
 	
-	IDependencyProvider.dependency_provision_requested.disconnect(_resolve_dependency_provision)
+	IDependencyProvider.dependency_registration_requested \
+		.disconnect(_register_dependency)
+	IDependencyProvider.dependency_deregistration_requested \
+		.disconnect(_deregister_dependency)
+	
+	IDependencyProvider.dependency_injection_requested \
+		.disconnect(_inject_dependencies)
 
 
 func _initialize_dependencies() -> void:
@@ -41,12 +80,20 @@ func _deinitialize_dependencies() -> void:
 	_dependencies_dict.clear()
 
 
+func _register_injectable(node: Node) -> void:
+	if not node.has_method(INJECT_METHOD_NAME):
+		return
+		
+	_injectables.append(node)
+
+
 func _register_dependency(dependency: Node) -> void:
 	if dependency == null:
 		# Log an Error
 		return
 		
-	var dependency_name: StringName = DependencyInjectionHelper.get_resolved_dependency_name(dependency.name)
+	var dependency_name: StringName = DependencyInjectionHelper \
+		.get_resolved_dependency_name(dependency.name)
 	_dependencies_dict[dependency_name] = dependency
 
 func _deregister_dependency(dependency_name: StringName) -> void:
@@ -54,26 +101,31 @@ func _deregister_dependency(dependency_name: StringName) -> void:
 		# Log an Error
 		return
 	
-	dependency_name = DependencyInjectionHelper.get_resolved_dependency_name(dependency_name)
+	dependency_name = DependencyInjectionHelper \
+		.get_resolved_dependency_name(dependency_name)
 	if _dependencies_dict.has(dependency_name):
 		_dependencies_dict.erase(dependency_name)
 
 
-func _resolve_dependency_provision(dependency_names: Array[StringName]) -> void:
-	var dependencies: Dictionary # Dictionary[StringName, Node]
-	
-	for dependency_name: StringName in dependency_names:
-		if not _dependencies_dict.has(dependency_name):
-			# Log an Error
-			IDependencyProvider.fail_dependency_provision(ERR_DOES_NOT_EXIST)
-			return
+func _inject_dependencies() -> void:
+	for injectable: Node in _injectables:
+		var method_info: Dictionary = DependencyInjectionHelper \
+			.get_method_info(injectable, INJECT_METHOD_NAME)
+		if method_info.is_empty():
+			# Log a warning that an _inject function has no parameters.
+			continue
+		
+		var callable: Callable = Callable(injectable, INJECT_METHOD_NAME)
+		var parameters: Array[Dictionary] = method_info.args
+		var arguments: Array = []
+		
+		for parameter: Dictionary in parameters:
+			var dependency_name: StringName = parameter.class_name
+			var dependency_instance: Node = _dependencies_dict \
+				.get(dependency_name)
+				
+			arguments.append(dependency_instance)
 			
-		var dependency: Node = _dependencies_dict.get(dependency_name)
-		if dependency == null:
-			# Log an Error
-			IDependencyProvider.fail_dependency_injection(ERR_UNAVAILABLE)
-			return
-			
-		dependencies[dependency_name] = dependency
+		callable.callv(arguments)
 	
-	IDependencyProvider.succeed_dependency_provision(dependencies)
+	_injectables.clear()
