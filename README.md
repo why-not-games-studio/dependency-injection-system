@@ -1,6 +1,6 @@
 # Simple Dependency Injection 
  ![image](https://raw.githubusercontent.com/why-not-games-studio/dependency-injection-system/origin/master/simple_dependency_injection_logo.png)
- 
+
  A simple Dependency Injection implementation for Godot 4 made with GDScript.
 
 ## Get Started
