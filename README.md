@@ -32,3 +32,5 @@
 **1.** A situation where you do not have direct in-scene access (via @export) to the nodes you need in a script and do not wish to create a Global Autoload.
 
 **2.** The nodes you are dependent on have their own in-scene dependencies.
+
+**3.** You wish to rely on abstractions to interact with other parts of your code. 
