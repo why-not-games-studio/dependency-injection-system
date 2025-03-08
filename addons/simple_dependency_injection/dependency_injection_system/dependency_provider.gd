@@ -25,7 +25,7 @@ var _injectables: Array[Node]
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings: PackedStringArray = []
 
-	for dependency in _dependencies:
+	for dependency: Node in _dependencies:
 		if dependency == null:
 			warnings.append("There cannot be an unassigned Dependency node.")
 			break
@@ -72,7 +72,7 @@ func _disconnect_signals() -> void:
 
 
 func _initialize_dependencies() -> void:
-	for dependency in _dependencies:
+	for dependency: Node in _dependencies:
 		_register_dependency(dependency)
 	_dependencies.clear()
 
@@ -108,7 +108,7 @@ func _deregister_dependency(dependency_name: StringName) -> void:
 
 
 func _inject_dependencies() -> void:
-	for injectable in _injectables:
+	for injectable: Node in _injectables:
 		var method_info: Dictionary = DependencyInjectionHelper \
 			.get_method_info(injectable, INJECT_METHOD_NAME)
 		if method_info.args.is_empty():
@@ -120,7 +120,7 @@ func _inject_dependencies() -> void:
 		var parameters: Array[Dictionary] = method_info.args
 		var arguments: Array = []
 		
-		for parameter in parameters:
+		for parameter: Dictionary in parameters:
 			var dependency_name: StringName = DependencyInjectionHelper \
 				.get_resolved_dependency_name(parameter.class_name)
 			var dependency_instance = _dependencies_dict \
