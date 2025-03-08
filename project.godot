@@ -19,6 +19,11 @@ config/icon="res://addons/simple_dependency_injection/demo/icon.svg"
 
 IDependencyProvider="*res://addons/simple_dependency_injection/dependency_injection_system/dependency_provider_interface.gd"
 
+[debug]
+
+gdscript/warnings/untyped_declaration=2
+gdscript/warnings/inferred_declaration=2
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/simple_dependency_injection/plugin.cfg")

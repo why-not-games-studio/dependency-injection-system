@@ -18,14 +18,14 @@ const INJECT_METHOD_NAME: StringName = "_inject"
 		if Engine.is_editor_hint():
 			update_configuration_warnings()
 
-var _dependencies_dict: Dictionary # Dictionary[StringName, Node]
+var _dependencies_dict: Dictionary[StringName, Node]
 var _injectables: Array[Node]
 
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings: PackedStringArray = []
 
-	for dependency: Node in _dependencies:
+	for dependency in _dependencies:
 		if dependency == null:
 			warnings.append("There cannot be an unassigned Dependency node.")
 			break
@@ -72,7 +72,7 @@ func _disconnect_signals() -> void:
 
 
 func _initialize_dependencies() -> void:
-	for dependency: Node in _dependencies:
+	for dependency in _dependencies:
 		_register_dependency(dependency)
 	_dependencies.clear()
 
@@ -108,7 +108,7 @@ func _deregister_dependency(dependency_name: StringName) -> void:
 
 
 func _inject_dependencies() -> void:
-	for injectable: Node in _injectables:
+	for injectable in _injectables:
 		var method_info: Dictionary = DependencyInjectionHelper \
 			.get_method_info(injectable, INJECT_METHOD_NAME)
 		if method_info.args.is_empty():
@@ -120,10 +120,10 @@ func _inject_dependencies() -> void:
 		var parameters: Array[Dictionary] = method_info.args
 		var arguments: Array = []
 		
-		for parameter: Dictionary in parameters:
+		for parameter in parameters:
 			var dependency_name: StringName = DependencyInjectionHelper \
 				.get_resolved_dependency_name(parameter.class_name)
-			var dependency_instance: Node = _dependencies_dict \
+			var dependency_instance = _dependencies_dict \
 				.get(dependency_name)
 				
 			arguments.append(dependency_instance)
