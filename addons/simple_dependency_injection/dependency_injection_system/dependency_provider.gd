@@ -18,7 +18,7 @@ const INJECT_METHOD_NAME: StringName = "_inject"
 		if Engine.is_editor_hint():
 			update_configuration_warnings()
 
-var _dependencies_dict: Dictionary # Dictionary[StringName, Node]
+var _dependencies_dict: Dictionary[StringName, Node]
 var _injectables: Array[Node]
 
 
@@ -123,7 +123,7 @@ func _inject_dependencies() -> void:
 		for parameter: Dictionary in parameters:
 			var dependency_name: StringName = DependencyInjectionHelper \
 				.get_resolved_dependency_name(parameter.class_name)
-			var dependency_instance: Node = _dependencies_dict \
+			var dependency_instance = _dependencies_dict \
 				.get(dependency_name)
 				
 			arguments.append(dependency_instance)
