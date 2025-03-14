@@ -123,7 +123,7 @@ func _inject_dependencies() -> void:
 		for parameter: Dictionary in parameters:
 			var dependency_name: StringName = DependencyInjectionHelper \
 				.get_resolved_dependency_name(parameter.name.to_pascal_case())
-			var dependency_instance = _dependencies_dict \
+			var dependency_instance: Node = _dependencies_dict \
 				.get(dependency_name)
 				
 			arguments.append(dependency_instance)
