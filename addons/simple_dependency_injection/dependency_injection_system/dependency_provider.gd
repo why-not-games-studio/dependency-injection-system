@@ -112,8 +112,8 @@ func _inject_dependencies() -> void:
 		var method_info: Dictionary = DependencyInjectionHelper \
 			.get_method_info(injectable, INJECT_METHOD_NAME)
 		if method_info.args.is_empty():
-			push_warning("The '_inject' function on [", injectable.name,
-			"] has no parameters.")
+			push_warning(str("The '", INJECT_METHOD_NAME, "' function on [")
+			, injectable.name, "] has no parameters.")
 			continue
 		
 		var callable: Callable = Callable(injectable, INJECT_METHOD_NAME)
