@@ -21,8 +21,9 @@ static func get_resolved_dependency_name(dependency_name: StringName) -> StringN
 	var base_class_name: StringName = _class_info_dict.get(dependency_name).base
 	if ClassDB.class_exists(base_class_name):
 		return dependency_name
-		
-	return base_class_name
+	
+	var resolved_dependency_name: StringName = str(base_class_name, "/", dependency_name)
+	return resolved_dependency_name
 
 
 static func get_method_info(node: Node, method_name: StringName) -> Dictionary:
