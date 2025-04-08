@@ -103,8 +103,7 @@ func _deregister_dependency(dependency_name: StringName) -> void:
 	
 	dependency_name = DependencyInjectionHelper \
 		.get_resolved_dependency_name(dependency_name)
-	if _dependencies_dict.has(dependency_name):
-		_dependencies_dict.erase(dependency_name)
+	_dependencies_dict.erase(dependency_name)
 
 
 func _inject_dependencies() -> void:
@@ -117,16 +116,12 @@ func _inject_dependencies() -> void:
 			continue
 		
 		var callable: Callable = Callable(injectable, INJECT_METHOD_NAME)
-		var parameters: Array[Dictionary] = method_info.args
 		var arguments: Array = []
 		
-		for parameter: Dictionary in parameters:
+		for parameter: Dictionary in method_info.args:
 			var dependency_name: StringName = DependencyInjectionHelper \
 				.get_resolved_dependency_name(parameter.name.to_pascal_case())
-			var dependency_instance: Node = _dependencies_dict \
-				.get(dependency_name)
-				
-			arguments.append(dependency_instance)
+			arguments.append(_dependencies_dict.get(dependency_name))
 			
 		callable.callv(arguments)
 	

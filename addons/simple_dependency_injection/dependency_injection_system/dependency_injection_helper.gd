@@ -3,6 +3,7 @@ extends Node
 
 
 static var _class_info_dict: Dictionary[StringName, Dictionary]
+static var _method_info_cache: Dictionary[StringName, Dictionary]
 
 
 static func _static_init() -> void:
@@ -12,7 +13,7 @@ static func _static_init() -> void:
 
 static func get_resolved_dependency_name(dependency_name: StringName) -> StringName:
 	if not _class_info_dict.has(dependency_name):
-		return ""
+		return dependency_name
 		
 	# We get the base class name because all scripts with 
 	# class_name defined have one in the global class list. 
@@ -27,8 +28,15 @@ static func get_resolved_dependency_name(dependency_name: StringName) -> StringN
 
 
 static func get_method_info(node: Node, method_name: StringName) -> Dictionary:
+	var key: StringName = node.name
+	
+	if _method_info_cache.has(key):
+		return _method_info_cache[key]
+	
 	var method_list: Array[Dictionary] = node.get_method_list()
 	for method: Dictionary in method_list:
 		if method.name == method_name:
+			_method_info_cache[key] = method
 			return method
+			
 	return {}
