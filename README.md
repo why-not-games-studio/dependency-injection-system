@@ -4,7 +4,7 @@
  A simple Dependency Injection implementation for Godot 4 made with GDScript.
 
 ## Get Started
-**1.** Go to **Project > Project Settings > Plugins** and ensure that the "Simple Dependency Injection" plugin is enabled.
+**1.** Go to **Project > Project Settings > Plugins** and enable the "Simple Dependency Injection" plugin.
    
    ![image](https://github.com/user-attachments/assets/d32dc005-55f4-494b-aea8-d7f81284b481)
 
