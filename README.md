@@ -1,36 +1,34 @@
 # Simple Dependency Injection 
  ![image](https://raw.githubusercontent.com/why-not-games-studio/dependency-injection-system/origin/master/simple_dependency_injection_logo.png)
 
- A simple Dependency Injection implementation for Godot 4 made with GDScript.
+ A simple Dependency Injection implementation for Godot 4 made in GDScript.
+
+## Important
+- This is a node-based dependency injection system so all the dependencies have to extend from [Node].
+- This tool will not create nor will it manage nodes, its job is to simply pass them to where they're needed.
+- This tool was built with simplicity in mind and working with the engine, so it can easily integrate into different workflows.
+
+## Known limitations
+1. If you have a dependency node with an attached script that has a 'class_name', ensure that the name of the node in the scene tree is the same as the 'class_name' to avoid issues.
+
+## Some use cases
+1. You're in a situation where you do not have direct access (via @export) to the nodes you need in a script and do not wish to create a global singleton via autoload.
+2. You want a form of dependency inversion and wish to rely on abstractions to interact with other parts of your code.
+3. The nodes you need have their own in-scene dependencies that they need to have direct access (via @export) to.
 
 ## Get Started
 **1.** Go to **Project > Project Settings > Plugins** and enable the "Simple Dependency Injection" plugin.
    
-   ![image](https://github.com/user-attachments/assets/d32dc005-55f4-494b-aea8-d7f81284b481)
+   ![image](https://github.com/user-attachments/assets/116f0c7d-2157-47a4-9a67-9621e4c1836e)
 
-**2.** Right-click on your main scene, click on the "Add Child Node" button, in the search bar, type "Dependency", select the [DependencyProvider], then click on the "Create" button.
+**2.** Now there should be two new nodes in your current opened scene, for visibility, you can place them at the very top of your scene tree hierarchy.
 
-   ![image](https://github.com/user-attachments/assets/107ac872-8475-492f-9369-c1f7f8b593de)
+   ![image](https://github.com/user-attachments/assets/b1fa714e-694c-46d5-9beb-9c6fff5888b0)
 
-   ![Hierarchy](https://github.com/user-attachments/assets/eae8b2c6-096f-4bca-8909-c45838fff54e)
+**3.** Now click on the created [DependencyRegistrar] node and in the Inspector, click on the "Dependencies" array to expand it, click on the "Add Element" button, then assign your dependency nodes.
 
-**3.** Now click on your created [DependencyProvider] and in the Inspector, under Members, click on the "Dependencies" array to expand it, click on the "Add Element" button, then assign your dependencies.
+   ![image](https://github.com/user-attachments/assets/095d1562-baf8-46c8-bf55-8a2dab510e11) ![image](https://github.com/user-attachments/assets/9856479b-fdb1-45d2-92f1-ac023a2c1382)
 
-   ![DP Inspector](https://github.com/user-attachments/assets/a227541d-809c-4236-8031-e42654cd7408)
+**4.** Now to use it, create any node, attach any script to it, and to allow dependency injection to happen, simply create either an __inject_ function or a __post_inject_ function, or **both**! But do keep in mind that these are only called after _ready. (If you don't like the "_inject" or "_post_inject" function names, feel free to change them in the [DependencyProvider] script)
 
-**4.** Right-click on any scene where you wish to inject dependencies into, click on the "Add Child Node" button, in the search bar, write 'dependency', select the [DependencyInjectionRequester], then click on the "Create" button.
-   
-   ![image](https://github.com/user-attachments/assets/92c7af6d-9667-425b-99b0-db5fa75296df)
-
-   ![image](https://github.com/user-attachments/assets/815d412e-d8b3-4d2a-89a5-694e2c53c321)
-
-**5.** Now to use it, in any scene with a [DependencyInjectionRequester] node, create any node, attach a script to it, and ensure that the script has a function named "_inject" for it to work. If you don't like the "_inject" function name, just change it in the [DependencyProvider] script.
-
-   ![Full Test Receiver](https://github.com/user-attachments/assets/5ccf27e1-2a62-4a82-b8b7-56c17b10ef2d)
-
-## Some Use Cases
-**1.** A situation where you do not have direct in-scene access (via @export) to the nodes you need in a script and do not wish to create a Global Autoload.
-
-**2.** The nodes you are dependent on have their own in-scene dependencies.
-
-**3.** You wish to rely on abstractions to interact with other parts of your code. 
+   ![image](https://github.com/user-attachments/assets/ff50942a-63bc-48e1-ab00-7a0cfbc0f397)
