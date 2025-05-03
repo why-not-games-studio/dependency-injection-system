@@ -40,7 +40,7 @@ static func get_method_info(node: Node, method_name: StringName) -> Dictionary:
 	# We iterate from the last method to skip the pre-existing methods that exist
 	# from inheritance.
 	var method_list: Array[Dictionary] = node.get_method_list()
-	for i in range(method_list.size() - 1, -1, -1):
+	for i: int in range(method_list.size() - 1, -1, -1):
 		var method: Dictionary = method_list[i]
 		if method.name == method_name:
 			_method_info_cache[key] = method
