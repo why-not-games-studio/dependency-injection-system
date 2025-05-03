@@ -16,7 +16,7 @@
 
 [node name="DependencyRegistrar" type="Node" parent="CoreSystems" node_paths=PackedStringArray("_dependencies")]
 script = ExtResource("2_y5a88")
-_dependencies = [NodePath("../GameManager"), NodePath("../DependencyWithoutBaseClass"), NodePath("../GameManagerTwo"), NodePath("../PauseManager")]
+_dependencies = [NodePath("../GameManager"), NodePath("../PauseManager"), NodePath("../DependencyWithoutBaseClass"), NodePath("../GameManagerTwo")]
 
 [node name="DependencyProvider" type="Node" parent="CoreSystems" node_paths=PackedStringArray("_dependency_registrar")]
 script = ExtResource("8_y5a88")
