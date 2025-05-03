@@ -1,12 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bh8otjc0kk4h"]
+[gd_scene load_steps=2 format=3 uid="uid://bh8otjc0kk4h"]
 
-[ext_resource type="Script" uid="uid://bv5j0w8ej1qpy" path="res://addons/simple_dependency_injection/dependency_injection_system/dependency_injection_requester.gd" id="2_gm43t"]
 [ext_resource type="Script" uid="uid://b0pn3jtixduw0" path="res://addons/simple_dependency_injection/demo/scripts/test_receiver.gd" id="2_k0hl5"]
 
 [node name="Sub" type="Node"]
-
-[node name="DependencyInjectionRequester" type="Node" parent="."]
-script = ExtResource("2_gm43t")
 
 [node name="TestReceiver" type="Node" parent="."]
 script = ExtResource("2_k0hl5")

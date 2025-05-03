@@ -1,3 +1,6 @@
+## Provides the functionality for getting a resolved dependency name, 
+## handles caching of class info for custom class checks, 
+## as well as caching of method info.
 class_name DependencyInjectionHelper
 extends Node
 
@@ -11,7 +14,8 @@ static func _static_init() -> void:
 		_class_info_dict[class_dict.class] = class_dict
 
 
-static func get_resolved_dependency_name(dependency_name: StringName) -> StringName:
+static func get_resolved_dependency_name(
+	dependency_name: StringName) -> StringName:
 	if not _class_info_dict.has(dependency_name):
 		return dependency_name
 		
@@ -23,20 +27,22 @@ static func get_resolved_dependency_name(dependency_name: StringName) -> StringN
 	if ClassDB.class_exists(base_class_name):
 		return dependency_name
 	
-	var resolved_dependency_name: StringName = str(base_class_name, "/", dependency_name)
+	var resolved_dependency_name: StringName = "%s/%s" % [base_class_name, dependency_name]
 	return resolved_dependency_name
 
 
 static func get_method_info(node: Node, method_name: StringName) -> Dictionary:
-	var key: StringName = node.name
+	var key: StringName = "%s.%s" % [node.name, method_name]
 	
 	if _method_info_cache.has(key):
 		return _method_info_cache[key]
 	
+	# We iterate from the last method to skip the pre-existing methods that exist
+	# from inheritance.
 	var method_list: Array[Dictionary] = node.get_method_list()
-	for method: Dictionary in method_list:
+	for i in range(method_list.size() - 1, -1, -1):
+		var method: Dictionary = method_list[i]
 		if method.name == method_name:
 			_method_info_cache[key] = method
 			return method
-			
 	return {}

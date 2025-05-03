@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bx4d63ujj0n3x"]
+[gd_scene load_steps=9 format=3 uid="uid://bx4d63ujj0n3x"]
 
 [ext_resource type="Script" uid="uid://bwghn7fx5txvp" path="res://addons/simple_dependency_injection/demo/game_management_system/game_manager.gd" id="2_1pao3"]
 [ext_resource type="Script" uid="uid://djmvqbnwxji3h" path="res://addons/simple_dependency_injection/dependency_injection_system/dependency_registrar.gd" id="2_y5a88"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://bh8otjc0kk4h" path="res://addons/simple_dependency_injection/demo/scenes/demo_sub.tscn" id="6_3c3tp"]
 [ext_resource type="Script" uid="uid://48rm1j85uv8m" path="res://addons/simple_dependency_injection/demo/scripts/game_manager_two.gd" id="6_8v3ij"]
 [ext_resource type="Script" uid="uid://gcgdwtimrkko" path="res://addons/simple_dependency_injection/dependency_injection_system/dependency_provider.gd" id="8_y5a88"]
-[ext_resource type="Script" uid="uid://b0pn3jtixduw0" path="res://addons/simple_dependency_injection/demo/scripts/test_receiver.gd" id="9_8oloh"]
 
 [node name="Main" type="Node"]
 
@@ -16,16 +15,14 @@
 
 [node name="DependencyRegistrar" type="Node" parent="CoreSystems" node_paths=PackedStringArray("_dependencies")]
 script = ExtResource("2_y5a88")
-_dependencies = [NodePath("../GameManager"), NodePath("../DependencyWithoutBaseClass"), NodePath("../GameManagerTwo"), NodePath("../PauseManager")]
+_dependencies = [NodePath("../DependencyWithoutBaseClass"), NodePath("../GameManager"), NodePath("../PauseManager"), NodePath("../GameManagerTwo")]
 
-[node name="DependencyProvider" type="Node" parent="CoreSystems" node_paths=PackedStringArray("_dependency_registrar")]
+[node name="DependencyProvider" type="Node" parent="CoreSystems"]
 script = ExtResource("8_y5a88")
-_dependency_registrar = NodePath("../DependencyRegistrar")
 
-[node name="GameManager" type="Node" parent="CoreSystems" node_paths=PackedStringArray("_initial_game_state", "_game_states")]
+[node name="GameManager" type="Node" parent="CoreSystems" node_paths=PackedStringArray("_initial_game_state")]
 script = ExtResource("2_1pao3")
 _initial_game_state = NodePath("Init")
-_game_states = [NodePath("Init")]
 
 [node name="Init" type="Node" parent="CoreSystems/GameManager"]
 script = ExtResource("3_nkxin")
@@ -41,8 +38,3 @@ script = ExtResource("6_8v3ij")
 metadata/_custom_type_script = "uid://48rm1j85uv8m"
 
 [node name="Sub" parent="." instance=ExtResource("6_3c3tp")]
-
-[node name="Sub2" type="Node" parent="."]
-
-[node name="TestReceiver2" type="Node" parent="Sub2"]
-script = ExtResource("9_8oloh")
