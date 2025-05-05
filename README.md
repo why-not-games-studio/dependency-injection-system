@@ -9,7 +9,10 @@
 - This tool was built with simplicity in mind and working with the engine, so it can easily integrate into different workflows.
 
 ## Known limitations
-1. If you have a dependency node with an attached script that has a 'class_name', ensure that the name of the node in the scene tree is the same as the 'class_name' to avoid issues.
+1. Ensure that in an __inject_ function, all parameter names are the same as their corresponding dependency node name to avoid issues. <br/>
+   For example, if you have a "GameManager" node and you want to receive it in a script: <br/>
+   ```func _inject(gaem_manager: GameManager) or func _inject(gaem_manager) ❌ Fails``` <br/>
+   ```func _inject(game_manager: GameManager) or func _inject(game_manager) ✅ Works```
 
 ## Some use cases
 1. You're in a situation where you do not have direct access (via @export) to the nodes you need in a script and do not wish to create a global singleton via autoload.
