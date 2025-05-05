@@ -4,12 +4,12 @@ class_name DependencyRegistrarBase
 extends Node
 
 
-func get_dependency(dependency_name: StringName) -> Node:
+func get_dependency(_dependency_name: StringName) -> Node:
 	return null
 
 
-func register_dependency(dependency: Node) -> void:
+func register_dependency(_dependency: Node) -> void:
 	pass
 
-func deregister_dependency(dependency_name: StringName) -> void:
+func deregister_dependency(_dependency_name: StringName) -> void:
 	pass
