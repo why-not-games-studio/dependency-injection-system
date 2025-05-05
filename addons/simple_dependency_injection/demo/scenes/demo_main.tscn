@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bx4d63ujj0n3x"]
+[gd_scene load_steps=11 format=3 uid="uid://bx4d63ujj0n3x"]
 
 [ext_resource type="Script" uid="uid://bwghn7fx5txvp" path="res://addons/simple_dependency_injection/demo/game_management_system/game_manager.gd" id="2_1pao3"]
 [ext_resource type="Script" uid="uid://djmvqbnwxji3h" path="res://addons/simple_dependency_injection/dependency_injection_system/dependency_registrar.gd" id="2_y5a88"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://kafkpxvunsur" path="res://addons/simple_dependency_injection/demo/scripts/dependency_without_base_class.gd" id="5_2l4pj"]
 [ext_resource type="PackedScene" uid="uid://bh8otjc0kk4h" path="res://addons/simple_dependency_injection/demo/scenes/demo_sub.tscn" id="6_3c3tp"]
 [ext_resource type="Script" uid="uid://48rm1j85uv8m" path="res://addons/simple_dependency_injection/demo/scripts/game_manager_two.gd" id="6_8v3ij"]
+[ext_resource type="Script" uid="uid://c6bmn6iukwooq" path="res://addons/simple_dependency_injection/demo/scripts/dependency_without_class_name.gd" id="8_ew4h5"]
 [ext_resource type="Script" uid="uid://gcgdwtimrkko" path="res://addons/simple_dependency_injection/dependency_injection_system/dependency_provider.gd" id="8_y5a88"]
 [ext_resource type="Script" uid="uid://b0pn3jtixduw0" path="res://addons/simple_dependency_injection/demo/scripts/test_receiver.gd" id="9_8oloh"]
 
@@ -16,7 +17,7 @@
 
 [node name="DependencyRegistrar" type="Node" parent="CoreSystems" node_paths=PackedStringArray("_dependencies")]
 script = ExtResource("2_y5a88")
-_dependencies = [NodePath("../GameManager"), NodePath("../PauseManager"), NodePath("../DependencyWithoutBaseClass"), NodePath("../GameManagerTwo")]
+_dependencies = [NodePath("../GameManager"), NodePath("../PauseManager"), NodePath("../DependencyWithoutBaseClass"), NodePath("../GameManagerTwo"), NodePath("../DependencyWithoutClassName")]
 
 [node name="DependencyProvider" type="Node" parent="CoreSystems" node_paths=PackedStringArray("_dependency_registrar")]
 script = ExtResource("8_y5a88")
@@ -39,6 +40,9 @@ script = ExtResource("5_2l4pj")
 [node name="GameManagerTwo" type="Node" parent="CoreSystems"]
 script = ExtResource("6_8v3ij")
 metadata/_custom_type_script = "uid://48rm1j85uv8m"
+
+[node name="DependencyWithoutClassName" type="Node" parent="CoreSystems"]
+script = ExtResource("8_ew4h5")
 
 [node name="Sub" parent="." instance=ExtResource("6_3c3tp")]
 
