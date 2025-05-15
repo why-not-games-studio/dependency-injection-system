@@ -7,6 +7,7 @@
 - This is a node-based dependency injection system so all the dependencies have to be nodes in the [SceneTree].
 - This tool will not create nor will it manage nodes, its job is to simply pass them to where they are needed.
 - This tool was built with simplicity in mind and working with the engine, so it can easily integrate into different workflows.
+- Both the [DependencyRegistrar] and the [DependencyProvider] nodes have to be at the top of the [SceneTree].
 
 ## Known limitations
 1. Ensure that in an __inject_ function, all parameter names are the same as their corresponding dependency node name to avoid issues. <br/>
