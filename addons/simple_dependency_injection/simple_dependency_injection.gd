@@ -2,7 +2,18 @@
 extends EditorPlugin
 
 
+const DEPENDENCY_INJECTION_HELPER_NAME: StringName = "DependencyInjectionHelper"
+
+
 func _enable_plugin() -> void:
+	add_autoload_singleton(
+		DEPENDENCY_INJECTION_HELPER_NAME, 
+		"res://addons/%s/%s/%s" % [
+			"simple_dependency_injection",
+			"dependency_injection_system",
+			"dependency_injection_helper.gd",
+		])
+	
 	var scene_root = get_editor_interface().get_edited_scene_root()
 	if scene_root:
 		var dependency_registrar = DependencyRegistrar.new()
@@ -19,6 +30,8 @@ func _enable_plugin() -> void:
 		dependency_provider.owner = scene_root
 
 func _disable_plugin() -> void:
+	remove_autoload_singleton(DEPENDENCY_INJECTION_HELPER_NAME)
+	
 	var scene_root = get_editor_interface().get_edited_scene_root()
 	if scene_root:
 		var registrar_node: Node = scene_root.find_child("DependencyRegistrar")

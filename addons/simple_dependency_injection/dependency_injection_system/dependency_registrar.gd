@@ -6,6 +6,7 @@ class_name DependencyRegistrar
 extends DependencyRegistrarBase
 
 
+@export_category("Required")
 @export var _dependencies: Array[Node]:
 	get:
 		return _dependencies

@@ -15,6 +15,10 @@ run/main_scene="res://addons/simple_dependency_injection/demo/scenes/demo_main.t
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://addons/simple_dependency_injection/demo/icon.svg"
 
+[autoload]
+
+DependencyInjectionHelper="*res://addons/simple_dependency_injection/dependency_injection_system/dependency_injection_helper.gd"
+
 [debug]
 
 gdscript/warnings/untyped_declaration=2
