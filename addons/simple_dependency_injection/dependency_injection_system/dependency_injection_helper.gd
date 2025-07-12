@@ -1,20 +1,20 @@
 ## Provides the functionality for getting a resolved dependency name, 
 ## handles caching of class info for custom class checks, 
 ## as well as caching of method info.
-# class_name DependencyInjectionHelper
+class_name DependencyInjectionHelper
 extends Node
 
 
-var _class_info_dict: Dictionary[StringName, Dictionary]
-var _method_info_cache: Dictionary[StringName, Dictionary]
+static var _class_info_dict: Dictionary[StringName, Dictionary]
+static var _method_info_cache: Dictionary[StringName, Dictionary]
 
 
-func _init() -> void:
+static func _static_init() -> void:
 	for class_dict: Dictionary in ProjectSettings.get_global_class_list():
 		_class_info_dict[class_dict.class] = class_dict
 
 
-func get_resolved_dependency_name(
+static func get_resolved_dependency_name(
 	dependency_name: StringName) -> StringName:
 	if not _class_info_dict.has(dependency_name):
 		return dependency_name
@@ -31,7 +31,7 @@ func get_resolved_dependency_name(
 	return resolved_dependency_name
 
 
-func get_method_info(node: Node, method_name: StringName) -> Dictionary:
+static func get_method_info(node: Node, method_name: StringName) -> Dictionary:
 	var key: StringName = "%s.%s" % [node.name, method_name]
 	
 	if _method_info_cache.has(key):

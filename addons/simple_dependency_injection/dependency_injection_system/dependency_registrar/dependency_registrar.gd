@@ -1,9 +1,9 @@
-## Default implementation of a [DependencyRegistrarBase] which serves as the registrar 
-## for all dependencies that can be injected via the [DependencyProvider] whether
+## This class serves as the registrar for
+## all dependencies that can be injected via the [DependencyProvider] whether
 ## set [u]before[/u] or [u]during[/u] runtime.
 @tool
 class_name DependencyRegistrar
-extends DependencyRegistrarBase
+extends Node
 
 
 @export_category("Required")

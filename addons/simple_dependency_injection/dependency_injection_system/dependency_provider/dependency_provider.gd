@@ -1,6 +1,7 @@
 ## Automatically provides the required node dependencies for valid injectables when they are added 
 ## to the [SceneTree]. [br][br]
 ## [u]Keep in mind[/u] that [i]_inject[/i] and [i]_post-inject[/i] calls happen after [i]_ready.[/i]
+@tool
 class_name DependencyProvider
 extends Node
 
@@ -9,7 +10,7 @@ const INJECT_METHOD_NAME: StringName = "_inject"
 const POST_INJECT_METHOD_NAME: StringName = "_post_inject"
 
 @export_category("Dependencies")
-@export var _dependency_registrar: DependencyRegistrarBase
+@export var _dependency_registrar: DependencyRegistrar
 
 var _injectables: Array[Node]
 var _post_injectables: Array[Node]
@@ -25,7 +26,7 @@ func _exit_tree() -> void:
 
 
 ## Sets the dependency registrar instance.
-func set_dependency_registrar(dependency_registrar: DependencyRegistrarBase) -> void:
+func set_dependency_registrar(dependency_registrar: DependencyRegistrar) -> void:
 	_dependency_registrar = dependency_registrar
 
 
