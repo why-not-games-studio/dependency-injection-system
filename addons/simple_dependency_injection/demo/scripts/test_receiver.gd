@@ -1,6 +1,11 @@
 class_name TestReceiver
 extends Node
 
+func _enter_tree() -> void:
+	print("%s entered tree." % name)
+
+func _ready() -> void:
+	print("%s is ready." % name)
 
 func _inject(
 	pause_manager: PauseManager, 

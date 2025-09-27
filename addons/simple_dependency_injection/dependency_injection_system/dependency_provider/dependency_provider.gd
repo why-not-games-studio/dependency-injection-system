@@ -7,22 +7,16 @@ extends Node
 
 
 const INJECT_METHOD_NAME: StringName = "_inject"
-const POST_INJECT_METHOD_NAME: StringName = "_post_inject"
 
 @export_category("Dependencies")
 @export var _dependency_registrar: DependencyRegistrar
 
-var _injectables: Array[Node]
-var _post_injectables: Array[Node]
-
-var _injection_scheduled: bool
-
 
 func _enter_tree() -> void:
-	get_tree().node_added.connect(_register_injectable)
+	get_tree().node_added.connect(_inject_dependencies_into)
 
 func _exit_tree() -> void:
-	get_tree().node_added.disconnect(_register_injectable)
+	get_tree().node_added.disconnect(_inject_dependencies_into)
 
 
 ## Sets the dependency registrar instance.
@@ -30,50 +24,20 @@ func set_dependency_registrar(dependency_registrar: DependencyRegistrar) -> void
 	_dependency_registrar = dependency_registrar
 
 
-func _register_injectable(node: Node) -> void:
-	var is_injectable: bool = false
-	
+func _inject_dependencies_into(node: Node):
 	if node.has_method(INJECT_METHOD_NAME):
-		_injectables.append(node)
-		is_injectable = true
-		
-	if node.has_method(POST_INJECT_METHOD_NAME):
-		_post_injectables.append(node)
-		is_injectable = true
-	
-	if is_injectable and not _injection_scheduled:
-		_injection_scheduled = true
-		_schedule_dependency_injection()
-
-
-func _schedule_dependency_injection() -> void:
-	await get_tree().process_frame
-	_inject_dependencies()
-
-
-func _inject_dependencies() -> void:
-	for injectable: Node in _injectables:
 		var method_info: Dictionary = DependencyInjectionHelper \
-			.get_method_info(injectable, INJECT_METHOD_NAME)
+			.get_method_info(node, INJECT_METHOD_NAME)
 		if method_info.args.is_empty():
 			push_warning("The '[%s]' function on [%s] has no parameters." \
-			% [INJECT_METHOD_NAME, injectable.name])
-			continue
+			% [INJECT_METHOD_NAME, node.name])
 		
-		var callable: Callable = Callable(injectable, INJECT_METHOD_NAME)
+		var callable: Callable = Callable(node, INJECT_METHOD_NAME)
 		var arguments: Array = []
 		
 		for parameter: Dictionary in method_info.args:
-
 			var dependency_name: StringName = DependencyInjectionHelper \
 				.get_resolved_dependency_name(parameter.name.to_pascal_case())
 			arguments.append(_dependency_registrar.get_dependency(dependency_name))
 			
 		callable.callv(arguments)
-	for post_injectable: Node in _post_injectables:
-		post_injectable._post_inject()
-	
-	_injectables.clear()
-	_post_injectables.clear()
-	
-	_injection_scheduled = false

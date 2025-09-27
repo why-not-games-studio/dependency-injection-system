@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bx4d63ujj0n3x"]
+[gd_scene load_steps=11 format=3 uid="uid://bx4d63ujj0n3x"]
 
 [ext_resource type="Script" uid="uid://bwghn7fx5txvp" path="res://addons/simple_dependency_injection/demo/game_management_system/game_manager.gd" id="2_1pao3"]
 [ext_resource type="Script" uid="uid://bwagx8icnnpdo" path="res://addons/simple_dependency_injection/demo/game_states/init.gd" id="3_nkxin"]
@@ -9,20 +9,16 @@
 [ext_resource type="Script" uid="uid://c6bmn6iukwooq" path="res://addons/simple_dependency_injection/demo/scripts/dependency_without_class_name.gd" id="8_ew4h5"]
 [ext_resource type="Script" uid="uid://b0pn3jtixduw0" path="res://addons/simple_dependency_injection/demo/scripts/test_receiver.gd" id="9_8oloh"]
 [ext_resource type="PackedScene" uid="uid://d2fvnr42s50t4" path="res://addons/simple_dependency_injection/dependency_injection_system/dependency_registrar/dependency_registrar_scene.tscn" id="9_bcr3j"]
-[ext_resource type="Script" uid="uid://djmvqbnwxji3h" path="res://addons/simple_dependency_injection/dependency_injection_system/dependency_registrar/dependency_registrar.gd" id="10_kvkye"]
 [ext_resource type="PackedScene" uid="uid://dwye6xmnnckk5" path="res://addons/simple_dependency_injection/dependency_injection_system/dependency_provider/dependency_provider_scene.tscn" id="11_of381"]
-[ext_resource type="Script" uid="uid://gcgdwtimrkko" path="res://addons/simple_dependency_injection/dependency_injection_system/dependency_provider/dependency_provider.gd" id="12_vx26g"]
 
 [node name="Main" type="Node"]
 
 [node name="CoreSystems" type="Node" parent="."]
 
-[node name="DependencyRegistrar" type="Node" parent="CoreSystems" node_paths=PackedStringArray("_dependencies") instance=ExtResource("9_bcr3j")]
-script = ExtResource("10_kvkye")
+[node name="DependencyRegistrar" parent="CoreSystems" node_paths=PackedStringArray("_dependencies") instance=ExtResource("9_bcr3j")]
 _dependencies = [NodePath("../GameManager"), NodePath("../PauseManager"), NodePath("../DependencyWithoutBaseClass"), NodePath("../GameManagerTwo"), NodePath("../DependencyWithoutClassName")]
 
-[node name="DependencyProvider" type="Node" parent="CoreSystems" node_paths=PackedStringArray("_dependency_registrar") instance=ExtResource("11_of381")]
-script = ExtResource("12_vx26g")
+[node name="DependencyProvider" parent="CoreSystems" node_paths=PackedStringArray("_dependency_registrar") instance=ExtResource("11_of381")]
 _dependency_registrar = NodePath("../DependencyRegistrar")
 
 [node name="GameManager" type="Node" parent="CoreSystems" node_paths=PackedStringArray("_initial_game_state", "_game_states")]
