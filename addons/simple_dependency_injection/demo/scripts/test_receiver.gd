@@ -2,10 +2,7 @@ class_name TestReceiver
 extends Node
 
 func _enter_tree() -> void:
-	print("%s entered tree." % name)
-
-func _ready() -> void:
-	print("%s is ready." % name)
+	print("\n%s entered tree.\n" % name)
 
 func _inject(
 	pause_manager: PauseManager, 
@@ -26,5 +23,5 @@ func _inject(
 	if dependency_without_class_name != null:
 		dependency_without_class_name.execute()
 
-func _post_inject() -> void:
-	print("%s post injected." % name)
+func _ready() -> void:
+	print("\n%s is ready." % name)

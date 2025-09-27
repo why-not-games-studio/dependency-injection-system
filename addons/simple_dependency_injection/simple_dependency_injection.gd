@@ -2,7 +2,6 @@
 extends EditorPlugin
 
 
-const DEPENDENCY_INJECTION_HELPER_NAME: StringName = "DependencyInjectionHelper"
 const DEPENDENCY_REGISTRAR_NAME: StringName = "DependencyRegistrar"
 const DEPENDENCY_PROVIDER_NAME: StringName = "DependencyProvider"
 
